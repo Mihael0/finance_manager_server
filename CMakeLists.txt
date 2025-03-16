@@ -8,6 +8,12 @@ set(CMAKE_CXX_STANDARD 17)
 # Set the project name
 project (finance_manager_server)
 
+# Specify the include directory where libxl headers are located
+include_directories("/home/mihael/opt/libxl-lin-4.5.1/include_cpp")
+
+# Specify the library directory where libxl library files are located
+link_directories("/home/mihael/opt/libxl-lin-4.5.1/lib64")
+
 # Create a sources variable with a link to all cpp files to compile
 set(SOURCES
         app/main.cpp
@@ -21,6 +27,9 @@ add_executable(finance_manager_server ${SOURCES})
 
 # Link Boost libraries (system is needed for Boost.Asio)
 target_link_libraries(finance_manager_server Boost::system)
+# The file name is libxl.so. CMAKE when searching for SHARED libraries looks for lib<PassedArugment>.dl/so
+# So, if you pass libxl it searches for liblibxl.
+target_link_libraries(finance_manager_server xl)
 
 # Set the directories that should be included in the build command for this target
 # when running g++ these will be included as -I/directory/path/
